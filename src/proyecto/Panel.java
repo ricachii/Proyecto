@@ -28,7 +28,7 @@ class Panel extends JPanel{
     
     public Color colorActual, colorAnterior;
     
-        BufferedImage miImagen;
+    BufferedImage miImagen;
     Graphics2D g2d;
     boolean rectangulo = true;
     boolean linea = false;
@@ -55,5 +55,10 @@ class Panel extends JPanel{
     public void setColorAnterior(Color colorAnterior) {
         this.colorAnterior = colorAnterior;
     }
+   public void mousePressed(MouseEvent e) {
+       g2d.draw(figura);
+       repaint();
+   }
+    
     
 }
