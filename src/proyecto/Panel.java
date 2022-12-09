@@ -22,9 +22,9 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 class Panel extends JPanel{
-    Point p1;
-    Point p2;
-    Shape figura;
+    private Point p1;
+    private Point p2;
+    private Shape figura;
     
     public Color colorActual, colorAnterior;
     
@@ -41,6 +41,8 @@ class Panel extends JPanel{
         this.colorActual = Color.MAGENTA;
         this.setBackground(Color.WHITE);
         this.setBorder(new LineBorder(Color.BLUE, 2));
+        OyenteDeRaton miOyenteDeRaton = new OyenteDeRaton(this);
+        addMouseListener(miOyenteDeRaton);
         
     }
     
@@ -87,6 +89,33 @@ class Panel extends JPanel{
 
     public void setFigura(Shape figura) {
         this.figura = figura;
+    }
+    public void setp1(Point p1){
+        this.p1 = p1;
+        
+    }
+     public void setp2(Point p2){
+        this.p2 = p2;
+        
+    }
+
+    
+    public boolean getRectangulo(){
+        return rectangulo;
+    }
+    public boolean getLinea(){
+        return linea;
+        
+    }
+    public Point getp1(){
+        return p1;
+    }
+    public Point getp2(){
+        return p2;
+    }
+    
+    public boolean getBorrar(){
+        return this.borrar;
     }
     //Metodos sobreescritos
     public void paintComponent(Graphics g) {
