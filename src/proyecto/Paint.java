@@ -143,43 +143,43 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
         }
         if (e.getSource() == this.nuevo) {
             valorPorDefecto();
-            this.Panel1.resetAll();
+            this.Panel.resetAll();
         }
         if (e.getSource() == this.abrir) {
-            if (this.Panel1.abrir()) {
+            if (this.Panel.abrir()) {
                 valorPorDefecto();
-                this.Panel1.resetAtributes();                
+                this.Panel.resetAtributes();                
             }
         }
         if (e.getSource() == this.guardar) {
-            this.Panel1.guardar();
+            this.Panel.guardar();
         }
         if (e.getSource() == this.salir) {
             this.dispose();
             //System.exit(0);
         }
         if (e.getSource() == this.rectangulo) {
-            this.Panel1.rectangulo = true;
-            this.Panel1.linea = false;
-            this.Panel1.borrar = false;
+            this.Panel.rectangulo = true;
+            this.Panel.linea = false;
+            this.Panel.borrar = false;
         }
         if (e.getSource() == this.linea) {
-            this.Panel1.rectangulo = false;
-            this.Panel1.linea = true;
-            this.Panel1.borrar = false;
+            this.Panel.rectangulo = false;
+            this.Panel.linea = true;
+            this.Panel.borrar = false;
         }
         if (e.getSource() == this.borrar) {
-            this.Panel1.rectangulo = false;
-            this.Panel1.linea = false;
-            this.Panel1.borrar = true;
+            this.Panel.rectangulo = false;
+            this.Panel.linea = false;
+            this.Panel.borrar = true;
         }        
         if (e.getSource() == this.relleno) {
-            this.Panel1.relleno = !this.Panel1.relleno;
+            this.Panel.relleno = !this.Panel.relleno;
         }
         if (e.getSource() == this.color) {
             Color aux;
-            aux = JColorChooser.showDialog(this, "Elija un color...", this.Panel1.getColorActual());
-            this.Panel1.setColorActual(aux);
+            aux = JColorChooser.showDialog(this, "Elija un color...", this.Panel.getColorActual());
+            this.Panel.setColorActual(aux);
         }   
         if (e.getSource() == this.acerca) {
             JOptionPane.showMessageDialog(null, "NICOLAS");
