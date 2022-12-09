@@ -28,32 +28,10 @@ class Panel extends JPanel{
     
     public Color colorActual, colorAnterior;
     
-        BufferedImage miImagen;
-    Graphics2D g2d;
-    boolean rectangulo = true;
-    boolean linea = false;
-    boolean borrar = false;
-    boolean relleno = false;
-    boolean rellenoAnterior;
     
     public Panel(){
         this.colorActual = Color.MAGENTA;
         this.setBorder(new LineBorder(Color.BLUE, 2));
-    }
-    
-    public Color getColorActual(){
-        return colorActual;
-    }
-    public void setColorActual(Color colorActual){
-        this.colorActual = colorActual;
-    }
-    
-      public Color getColorAnterior() {
-        return colorAnterior;
-    }
-
-    public void setColorAnterior(Color colorAnterior) {
-        this.colorAnterior = colorAnterior;
     }
     
 }
