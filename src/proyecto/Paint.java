@@ -1,6 +1,5 @@
 package proyecto;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -25,29 +24,22 @@ import javax.swing.JRadioButtonMenuItem;
 class Paint extends JFrame implements ActionListener, WindowFocusListener{
     
     Panel Panel;
-    Panel1 Panel1;
     String nombreArchivo;
    public Paint(String arch) throws HeadlessException {
+      
         Panel = new Panel();
-        Panel1 = new Panel1();
         this.add(Panel);
-        Panel.setBounds(0, 100, 1010, 663);
-        this.add(Panel1);
-        Panel1.setBounds(0, 0, 1024 ,100);
         this.setSize(1024,800);
-       
-        this.setLayout(null);
+        
         this.setVisible(true);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

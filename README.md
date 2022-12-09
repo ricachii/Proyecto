@@ -1,3 +1,0 @@
-Nicolas Ricciardi
-
-Matias Barriga
