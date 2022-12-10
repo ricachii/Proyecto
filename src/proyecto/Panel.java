@@ -42,7 +42,9 @@ class Panel extends JPanel{
         this.setBackground(Color.WHITE);
         this.setBorder(new LineBorder(Color.BLUE, 2));
         OyenteDeRaton miOyenteDeRaton = new OyenteDeRaton(this);
+        OyenteDeMovimiento miOyenteDeMovimiento = new OyenteDeMovimiento(this);
         addMouseListener(miOyenteDeRaton);
+        addMouseMotionListener(miOyenteDeMovimiento);
         
     }
     
