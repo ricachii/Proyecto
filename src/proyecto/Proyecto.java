@@ -11,6 +11,7 @@ public class Proyecto {
         int numero = (int) (Math.random()*1000);
         String nombre = "Pizarra_"+Integer.toString(numero);
         new Paint(nombre);
+        //Test Unit
         Point q1 = new Point();
         Point q2 = new Point();
         
