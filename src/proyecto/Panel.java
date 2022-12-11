@@ -16,8 +16,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -45,6 +47,8 @@ class Panel extends JPanel{
         OyenteDeMovimiento miOyenteDeMovimiento = new OyenteDeMovimiento(this);
         addMouseListener(miOyenteDeRaton);
         addMouseMotionListener(miOyenteDeMovimiento);
+        
+        
         
     }
     
@@ -273,6 +277,36 @@ class Panel extends JPanel{
             System.out.println(e.getMessage());
         }
     }
+    
+    public void guardarAutomatico(String nombreArchivo) {
+        try {
+            String extension = "jpg";
+            String path = ".\\";
+            
+            if (getMiImagen() != null) {
+                nombreArchivo = nombreArchivo +"."+ extension;
+                File file = new File(path, nombreArchivo);
+                File directory = new File(path);
+                // Validar si existe directorio
+                if (directory.exists()) {
+                    if (file.exists()) {
+                        javax.imageio.ImageIO.write(getMiImagen(), extension, file);
+                    }
+                    else {
+                        javax.imageio.ImageIO.write(getMiImagen(), extension, file);
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "ATENCION. Directorio: "+path+", no existe.");
+                }
+            }
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
     
     //Clases extras
     class MyFileFilter extends javax.swing.filechooser.FileFilter {

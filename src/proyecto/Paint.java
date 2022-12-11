@@ -21,13 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
 
-class Paint extends JFrame implements ActionListener, WindowFocusListener{
-    //Atributos 
+public class Paint extends JFrame implements ActionListener, WindowFocusListener {
+    /* Atributos */
     JMenu archivo;
     JMenuItem pizarra, nuevo, abrir, guardar, salir;
     
     JMenu dibujar;
-    JRadioButtonMenuItem rectangulo, linea, borrar;
+    JRadioButtonMenuItem rectangulo, linea, borrar,texto;
     JCheckBoxMenuItem relleno;
     JMenuItem color;
     
@@ -36,12 +36,12 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
     JColorChooser elegirColor = new JColorChooser();
     
     ButtonGroup btnGrp;
+    Panel Panel;
+   
     
     String nombreArchivo;
     
-    Panel Panel;
-    Panel1 Panel1;
-    
+
     public String getNombreArchivo() {
         return nombreArchivo;
     }
@@ -49,30 +49,28 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
     }
-
-    //Constructor
-   public Paint(String arch) throws HeadlessException {
-        
-       
+    
+    /* Constructor */
+    public Paint(String arch) throws HeadlessException {
+        crearMenu();
+        addListener();
         Panel = new Panel();
-        Panel1 = new Panel1();
+        //Panel1 = new Panel1();
         this.add(Panel);
-        Panel.setBounds(0, 100, 1010, 663);
-        this.add(Panel1);
-        Panel1.setBounds(0, 0, 1024 ,100);
         this.setSize(1024,800);
-
-
-        this.setLayout(null);
+        
+       // this.add(Panel1);
+       // Panel1.setBounds(0, 0, 1024 ,100);
+       // this.setSize(1024,800);
+        
         this.setVisible(true);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.nombreArchivo = arch;
         this.setTitle(this.nombreArchivo);
     }
-   
-   private void crearMenu() {
+    
+    private void crearMenu() {
         JMenuBar menu = new JMenuBar();
         this.archivo = new JMenu("Archivo");
         this.pizarra = new JMenuItem("Otra pizarra");
@@ -93,9 +91,11 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
         this.rectangulo = new JRadioButtonMenuItem("Rectangulo");
         this.linea = new JRadioButtonMenuItem("Linea");
         this.borrar = new JRadioButtonMenuItem("Borrar");
+        this.texto = new JRadioButtonMenuItem("Texto");
         this.btnGrp.add(this.rectangulo);
         this.btnGrp.add(this.linea);
         this.btnGrp.add(this.borrar);
+        this.btnGrp.add(this.texto);
         this.btnGrp.setSelected(this.rectangulo.getModel(), true);
         this.relleno = new JCheckBoxMenuItem("Relleno");
         this.color = new JMenuItem("Color");
@@ -104,6 +104,7 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
         this.dibujar.add(this.linea);
         this.dibujar.add(this.borrar);
         this.dibujar.add(this.relleno);
+        this.dibujar.add(this.texto);
         this.dibujar.add(this.color);
         menu.add(this.dibujar);
         
@@ -114,6 +115,7 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
         
         this.setJMenuBar(menu);
     }
+    
     public void valorPorDefecto() {
         this.btnGrp.setSelected(this.rectangulo.getModel(), true);
         this.relleno.setSelected(false);        
@@ -156,7 +158,7 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
         }
         if (e.getSource() == this.salir) {
             this.dispose();
-            //System.exit(0);
+           
         }
         if (e.getSource() == this.rectangulo) {
             this.Panel.rectangulo = true;
@@ -182,17 +184,26 @@ class Paint extends JFrame implements ActionListener, WindowFocusListener{
             this.Panel.setColorActual(aux);
         }   
         if (e.getSource() == this.acerca) {
-            JOptionPane.showMessageDialog(null, "NICOLAS");
+            JOptionPane.showMessageDialog(null, "Nicolas Ricciardi"
+                    + "\nMatias Barriga");
         }        
     }
 
     @Override
     public void windowGainedFocus(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      
     }
+
     @Override
     public void windowLostFocus(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("1. Perdi el focus !!! "+this.getNombreArchivo());
+        
+        if (this.getNombreArchivo() == null) {
+            this.Panel.guardar();
+        } 
+        else {
+            this.Panel.guardarAutomatico(this.getNombreArchivo());
+        }
     }
-    
 }
+
