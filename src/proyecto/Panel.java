@@ -38,6 +38,11 @@ class Panel extends JPanel{
     boolean relleno = false;
     boolean rellenoAnterior;
     
+    /**
+     *
+     * @param Panel constructor de la clase inicializa el color,fondo,borde,movimientos del ratón
+     * @return No retorna nada
+     */
     
     public Panel(){
         this.colorActual = Color.MAGENTA;
@@ -67,7 +72,12 @@ class Panel extends JPanel{
         this.colorAnterior = colorAnterior;
     }
     
-
+    /**
+     * 
+     * @param paint hereda el paint del original
+     * @return no retorna nada
+     */
+    
     public void paint(Graphics g){
         super.paint(g);
 
@@ -124,6 +134,12 @@ class Panel extends JPanel{
         return this.borrar;
     }
     //Metodos sobreescritos
+    
+    /**
+     * 
+     * @param paintComponent muestra las figuras que se mostraran en el panel
+     * @return no retorna nada
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (getMiImagen() == null) {
@@ -152,6 +168,10 @@ class Panel extends JPanel{
         }
     }
     //otros metodos
+    /**
+     * @param crearGraphics2D metedo del tipo Graphics2D el cual se encarga de crear las figuras respecto su tamaño, posicion, color, etc
+     * @return retorna grafica en 2d
+     */
     public Graphics2D crearGraphics2D() {
         Graphics2D g2 = null;
         
@@ -167,6 +187,11 @@ class Panel extends JPanel{
         return g2;
     }
     
+    /**
+     * 
+     * @param crearRectangulo clase del tipo Shape el cual recibe puntos que inicializan la posicion y tamaño del rentangulo
+     * @return Retorna una figura geometrica
+     */
     public Shape crearRectangulo(Point p1, Point p2) {
         double xInicio = Math.min(p1.getX(),  p2.getX());
         double yInicio = Math.min(p1.getY(),  p2.getY());
@@ -176,11 +201,21 @@ class Panel extends JPanel{
         return nuevaFigura;
     }
     
+    /**
+     * 
+     * @param crearLinea clase del tipo Shape el cual recibe puntos que inicializan la posicion y tamaño de la linea
+     * @return Retorna una linea
+     */
     public Shape crearLinea(Point p1, Point p2) {
         Shape nuevaFigura = new Line2D.Double(p1.getX(), p1.getY(), p2.getX(), p2.getY());
         return nuevaFigura;
     }
-
+    
+    /**
+     * 
+     * @param crearRectangulo clase del tipo Shape el cual recibe puntos que inicializan la posicion y tamaño de la herramienta borrar
+     * @return Retorna un area que permite eliminar objetos
+     */
     public Shape borrarAlgo(Point p1, Point p2) {
         double xInicio = Math.min(p1.getX(),  p2.getX());
         double yInicio = Math.min(p1.getY(),  p2.getY());
@@ -189,6 +224,10 @@ class Panel extends JPanel{
         Shape nuevaFigura = new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
         return nuevaFigura;
     }
+    /**
+     * @param createFileChooser metodo que crea el seleccionador de archivos
+     * @return retorna un archivo de la extensión seleccionada
+     */
     public JFileChooser createFileChooser() {
         JFileChooser jfc = new JFileChooser();
         
@@ -215,7 +254,11 @@ class Panel extends JPanel{
         setMiImagen(null);
         repaint();
     }
-   
+    
+    /**
+     * @param abrir metodo que se encarga de verificar que la apartura de archivos se lleve a cabo y sea correcta
+     * @return retorna un booleano
+     */
     public boolean abrir() {
         try {
             JFileChooser jfc = createFileChooser();
@@ -277,7 +320,11 @@ class Panel extends JPanel{
             System.out.println(e.getMessage());
         }
     }
-    
+    /**
+     * 
+     * @param guardarAutomatico recibe el nombre del archivo asociado a la imagen dibujada en la pizarra lo guarda en una extensión jpg y lo almacena en la carpeta exterior a src 
+     * @return no retorna nada
+     */
     public void guardarAutomatico(String nombreArchivo) {
         try {
             String extension = "jpg";

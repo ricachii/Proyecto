@@ -5,8 +5,16 @@ import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 
-
+/**
+ *
+ * @author Nicolas
+ */
 public class Proyecto {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         int numero = (int) (Math.random()*1000);
         String nombre = "Pizarra_"+Integer.toString(numero);

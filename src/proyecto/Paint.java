@@ -20,7 +20,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
-
+/**
+ *
+ * @author Nicolas
+ */
 public class Paint extends JFrame implements ActionListener, WindowFocusListener {
     /* Atributos */
     JMenu archivo;
@@ -41,16 +44,36 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
     
     String nombreArchivo;
     
-
+    /**
+     *
+     * @return
+     */
     public String getNombreArchivo() {
         return nombreArchivo;
     }
 
+    /**
+     *
+     * @param nombreArchivo
+     */
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
     }
     
     /* Constructor */
+
+    /**
+     *
+     * @param arch
+     * @throws HeadlessException
+     */
+    
+    /**
+     * 
+     * @param Paint constructor que inicializa la ventana, el panel y todos sus componentes
+     * @return no retorna nada
+     * @throws HeadlessException 
+     */
     public Paint(String arch) throws HeadlessException {
         crearMenu();
         addListener();
@@ -70,6 +93,10 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
         this.setTitle(this.nombreArchivo);
     }
     
+    /**
+     * @param crearMenu este metodo contiene la interfaz y los botones que se veran una vez se ejecute el programa
+     * @return no retorna nada
+     */
     private void crearMenu() {
         JMenuBar menu = new JMenuBar();
         this.archivo = new JMenu("Archivo");
@@ -116,11 +143,19 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
         this.setJMenuBar(menu);
     }
     
+    /**
+     *
+     */
     public void valorPorDefecto() {
         this.btnGrp.setSelected(this.rectangulo.getModel(), true);
         this.relleno.setSelected(false);        
     }
     
+    /**
+     * 
+     *@param addListener metodo que registra los movimientos del raton para los respectivos objetos 
+     * @return no retorna nada
+     */
     private void addListener() {
         this.pizarra.addActionListener(this);
         this.nuevo.addActionListener(this);
@@ -136,7 +171,15 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
         addWindowFocusListener(this);
     }
     
+    /**
+     *
+     * @param e
+     */
     @Override
+    /**
+     * @param actionPerformed metodo que se encarga de registrar los valores a traves de la interfaz 
+     * @return no retorna nada
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.pizarra) {
             int numero = (int) (Math.random()*1000);
@@ -189,11 +232,19 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
         }        
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void windowGainedFocus(WindowEvent e) {
       
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void windowLostFocus(WindowEvent e) {
         System.out.println("1. Perdi el focus !!! "+this.getNombreArchivo());
