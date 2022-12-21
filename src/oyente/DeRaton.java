@@ -9,18 +9,36 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import pizarra.MiPanel;
 
-
+/**
+ * Clase oyente de los clic sobre mouse
+ * @author Nicolas
+ */
 public class DeRaton extends MouseAdapter {
     private MiPanel miPanel;
 
+    /**
+    * Recupera objeto MiPanel
+    * @return miPanel objeto MiPanel
+    * 
+    */         
     public MiPanel getMiPanel() {
         return miPanel;
     }
 
+    /**
+    * Actualiza objeto MiPanel
+    * @param miPanel Objeto que contiene los dibujos
+    * 
+    */  
     public void setMiPanel(MiPanel miPanel) {
         this.miPanel = miPanel;
     }
 
+    /**
+    * Constructor de clase DeRaton
+    * @param miPanel Objeto que contiene los dibujos
+    * 
+    */     
     public DeRaton(MiPanel miPanel) {
         this.miPanel = miPanel;
     }
@@ -39,7 +57,11 @@ public class DeRaton extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent evento) {
+        
+        if (getMiPanel().isRectangulo() || getMiPanel().isLinea() || getMiPanel().isBorrar() || getMiPanel().isAgregarTexto())
+            getMiPanel().setMoverRecorte(false);
         getMiPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        
         if (getMiPanel().isRectangulo()) {
             getMiPanel().setPuntoY(evento.getPoint());
             if (getMiPanel().getPuntoY() != null) {
@@ -70,13 +92,18 @@ public class DeRaton extends MouseAdapter {
                         getMiPanel().repaint();                    
                     }
                     else {
-                        if (getMiPanel().isSeleccionar()) {
+                        if (getMiPanel().isSeleccionar() && !getMiPanel().isMoverRecorte()) {
                             getMiPanel().setPuntoY(evento.getPoint());
                             System.out.println("2. Este es mi área");
                             getMiPanel().setFigura(getMiPanel().seleccionarAlgo(getMiPanel().getPuntoX(), getMiPanel().getPuntoY()));
-                            getMiPanel().setColorActual(Color.WHITE);
-                            getMiPanel().setRelleno(true);                            
+                            // getMiPanel().setColorActual(Color.WHITE);
+                            // getMiPanel().setRelleno(true);                            
                             getMiPanel().repaint();                    
+                        }
+                        else {
+                            if (getMiPanel().isMoverRecorte()) {
+                                System.out.println("5. Solte botón mouse");
+                            }
                         }
                     }
                 }

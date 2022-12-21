@@ -1,3 +1,4 @@
+
 package archivo;
 
 import java.awt.Graphics;
@@ -10,24 +11,43 @@ import javax.swing.JOptionPane;
 import pizarra.MiPanel;
 
 /**
- *
- * @author ricar
+ * Clase con las operaciones para abrir y guardar archivo de imagen
+ * @author Nicolas
  */
 public class Operaciones {
     private MiPanel miPanel;
 
+    /**
+    * Recupera objeto MiPanel
+    * @return miPanel objeto MiPanel
+    * 
+    */        
     public MiPanel getMiPanel() {
         return miPanel;
     }
-
+    
+    /**
+    * Actualiza objeto MiPanel
+    * @param miPanel Objeto que contiene los dibujos
+    * 
+    */  
     public void setMiPanel(MiPanel miPanel) {
         this.miPanel = miPanel;
     }
 
+    /**
+    * Constructor de clase Operaciones
+    * @param miPanel Objeto que contiene los dibujos
+    * 
+    */       
     public Operaciones(MiPanel miPanel) {
         this.miPanel = miPanel;
     }
-    
+
+    /**
+    * Permite abrir un archivo de imagen, de extensión .jpg
+    * @return true En el caso de apertura exitosa. false en caso contrario.
+    */      
     public boolean abrir() {
         try {
             JFileChooser jfc = createFileChooser();
@@ -56,7 +76,12 @@ public class Operaciones {
             //System.exit(1);
         }
     }
-    
+
+    /**
+    * Crear una lista de los archivos que pueden ser aceptados
+    * @return jfc lista de tipos de archivos
+    * 
+    */     
     public JFileChooser createFileChooser() {
         JFileChooser jfc = new JFileChooser();
         
@@ -69,6 +94,11 @@ public class Operaciones {
         return jfc;
     }
 
+    /**
+    * Obtener una lista de formatos 
+    * @return setFormatos.toArray(new String[0]) lista de formatos
+    * 
+    */   
     public String[] getFormats() {
         String[] formatos = javax.imageio.ImageIO.getWriterFormatNames();
         java.util.TreeSet<String> setFormatos = new java.util.TreeSet<String>();
@@ -77,7 +107,11 @@ public class Operaciones {
         }
         return setFormatos.toArray(new String[0]);
     }  
-    
+
+    /**
+    * Permite guardar un archivo de imagen, de extensión .jpg
+    * 
+    */         
     public void guardar() {
         try {
             JFileChooser jfc = createFileChooser();
@@ -102,6 +136,11 @@ public class Operaciones {
         }
     }
 
+    /**
+    * Permite guardar de manera automática un archivo de imagen, de extensión .jpg en un directorio definido.
+    * @param nombreArchivo Nombre del archivo con el cual se guarda.
+    * 
+    */     
     public void guardarAutomatico(String nombreArchivo) {
         try {
             String extension = "jpg";
