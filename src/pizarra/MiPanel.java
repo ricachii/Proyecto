@@ -21,6 +21,7 @@ import oyente.DeRaton;
 import archivo.*;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -196,66 +197,134 @@ public class MiPanel extends JPanel {
 
     // Constructor //
     // *********** //
-    public MiPanel() {
-        this.setColorActual(Color.MAGENTA);
+   public Panel(){
+        this.colorActual = Color.MAGENTA;
         this.setBackground(Color.WHITE);
         this.setBorder(new LineBorder(Color.BLUE, 2));
-
-        DeRaton deRaton = new DeRaton(this);
-        DeMovimiento deMovimiento = new DeMovimiento(this);
+        DeRaton miOyenteDeRaton = new DeRaton(this);
+        DeMovimiento miOyenteDeMovimiento = new DeMovimiento(this);
+        addMouseListener(miOyenteDeRaton);
+        addMouseMotionListener(miOyenteDeMovimiento);
         
-        addMouseListener(deRaton);
-        addMouseMotionListener(deMovimiento);
+        
+        
     }
     
-    @Override
+     public Color getColorActual(){
+        return colorActual;
+    }
+    public void setColorActual(Color colorActual){
+        this.colorActual = colorActual;
+    }
+    
+      public Color getColorAnterior() {
+        return colorAnterior;
+    }
+
+    public void setColorAnterior(Color colorAnterior) {
+        this.colorAnterior = colorAnterior;
+    }
+    
+    /**
+     * 
+     * @param paint hereda el paint del original
+     * @return no retorna nada
+     */
+    
+    public void paint(Graphics g){
+        super.paint(g);
+
+    }
+    
+    public BufferedImage getMiImagen() {
+        return miImagen;
+    }
+    
+    public void setMiImagen(BufferedImage miImagen) {
+        this.miImagen = miImagen;
+    }
+
+    public Graphics2D getG2d() {
+        return g2d;
+    }
+
+    public void setG2d(Graphics2D g2d) {
+        this.g2d = g2d;
+    }
+    
+    public Shape getFigura() {
+        return figura;
+    }
+
+    public void setFigura(Shape figura) {
+        this.figura = figura;
+    }
+    public void setp1(Point p1){
+        this.p1 = p1;
+        
+    }
+     public void setp2(Point p2){
+        this.p2 = p2;
+        
+    }
+
+    
+    public boolean getRectangulo(){
+        return rectangulo;
+    }
+    public boolean getLinea(){
+        return linea;
+        
+    }
+    public Point getp1(){
+        return p1;
+    }
+    public Point getp2(){
+        return p2;
+    }
+    
+    public boolean getBorrar(){
+        return this.borrar;
+    }
+    //Metodos sobreescritos
+    
+    /**
+     * 
+     * @param paintComponent muestra las figuras que se mostraran en el panel
+     * @return no retorna nada
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (getMiImagen() == null) {
             setG2d( this.crearGraphics2D() );
         }
-        if (this.getFigura() != null) {
+        if (getFigura() != null) {
             // Arreglar este if
-            if (this.isRelleno()) {
+            if (relleno) {
                 getG2d().setColor(getColorActual());
                 getG2d().draw(getFigura());
                 getG2d().fill(getFigura());
             }
             else {
                 getG2d().setColor(getColorActual());
-                getG2d().draw(getFigura());
+                getG2d().draw(getFigura());                
             }
-            if (this.getMiImagen() != null && isShowing()) {
+            if (getMiImagen() != null && isShowing()) {
                 g.drawImage(getMiImagen(), 0, 0, this);
             }
-            if (this.isBorrar()) {
-                this.setColorActual( this.getColorAnterior() );
-                this.setRelleno(this.isRellenoAnterior());
+            if (borrar) {
+                //System.out.println("MiPanel..paintComponent");
+                setColorActual( getColorAnterior() );
+                relleno = rellenoAnterior;
             }
-            this.setFigura(null);
+            setFigura(null);
         }
-    }    
-
-    // Metodos propios //
-    // *************** //
-    public void resetAtributes(){
-        this.setRectangulo(true);
-        this.setLinea(false);
-        this.setBorrar(false);
-        this.setRelleno(false);
-        this.setAgregarTexto(false);
-        this.setSeleccionar(false);
-        this.setColorActual(Color.MAGENTA);
-        this.setBackground(Color.WHITE);
-        this.setBorder(new LineBorder(Color.BLUE, 2));        
     }
-    
-    public void resetAll() {
-        this.resetAtributes();
-        this.setMiImagen(null);
-        repaint();
-    }
-    
+    //otros metodos
+    /**
+     * @param crearGraphics2D metedo del tipo Graphics2D el cual se encarga de crear las figuras respecto su tamaño, posicion, color, etc
+     * @return retorna grafica en 2d
+     */
     public Graphics2D crearGraphics2D() {
         Graphics2D g2 = null;
         
@@ -270,89 +339,49 @@ public class MiPanel extends JPanel {
         g2.clearRect(0, 0, getSize().width, getSize().height);
         return g2;
     }
-        
+    
+    /**
+     * 
+     * @param crearRectangulo clase del tipo Shape el cual recibe puntos que inicializan la posicion y tamaño del rentangulo
+     * @return Retorna una figura geometrica
+     */
     public Shape crearRectangulo(Point p1, Point p2) {
         double xInicio = Math.min(p1.getX(),  p2.getX());
         double yInicio = Math.min(p1.getY(),  p2.getY());
         double ancho   = Math.abs(p1.getX() - p2.getX());
         double altura  = Math.abs(p1.getY() - p2.getY());
-        return new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
-    }   
-    
-    public Shape crearLinea(Point p1, Point p2) {
-        return new Line2D.Double(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        Shape nuevaFigura = new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
+        return nuevaFigura;
     }
     
+    /**
+     * 
+     * @param crearLinea clase del tipo Shape el cual recibe puntos que inicializan la posicion y tamaño de la linea
+     * @return Retorna una linea
+     */
+    public Shape crearLinea(Point p1, Point p2) {
+        Shape nuevaFigura = new Line2D.Double(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        return nuevaFigura;
+    }
+    
+    /**
+     * 
+     * @param crearRectangulo clase del tipo Shape el cual recibe puntos que inicializan la posicion y tamaño de la herramienta borrar
+     * @return Retorna un area que permite eliminar objetos
+     */
     public Shape borrarAlgo(Point p1, Point p2) {
         double xInicio = Math.min(p1.getX(),  p2.getX());
         double yInicio = Math.min(p1.getY(),  p2.getY());
         double ancho   = Math.abs(p1.getX() - p2.getX());
         double altura  = Math.abs(p1.getY() - p2.getY());
-        return new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
+        Shape nuevaFigura = new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
+        return nuevaFigura;
     }
-  
-    public Shape agregarTexto(Point p1, Point p2) {
-        double ancho   = Math.abs(0 - p2.getX());
-        double altura  = Math.abs(0 - p2.getY());
-
-        FontRenderContext frc = getG2d().getFontRenderContext();
-        TextLayout tl = new TextLayout(this.getTexto(), fuente, frc);
-        AffineTransform af = new AffineTransform();
-        af.setToTranslation(ancho, altura);
-        Shape shape = tl.getOutline(af);
-        return shape; 
-    } 
-    
-    public Shape seleccionarAlgo(Point p1, Point p2) {
-        double xInicio = Math.min(p1.getX(),  p2.getX());
-        double yInicio = Math.min(p1.getY(),  p2.getY());
-        double ancho   = Math.abs(p1.getX() - p2.getX());
-        double altura  = Math.abs(p1.getY() - p2.getY());
-        
-        // Recortar imagen
-        System.out.println("3. Recortando area seleccionada");
-        this.recorte = ((BufferedImage) this.getAntesDeRecorte()).getSubimage((int)xInicio, (int)yInicio, (int)ancho, (int)altura);
-        
-        return new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
-    } 
-    
-    public void rescatarImagen() {
-        this.setAntesDeRecorte( this.getMiImagen() );
-    }
-    
-    public void pintarEnOffscreen( Graphics2D g2){
-        double xInicio = Math.min(this.getPuntoX().getX(),  this.getPuntoY().getX());
-        double yInicio = Math.min(this.getPuntoX().getY(),  this.getPuntoY().getY());
-        double ancho   = Math.abs(this.getPuntoX().getX() - this.getPuntoY().getX());
-        double altura  = Math.abs(this.getPuntoX().getY() - this.getPuntoY().getY());
-        
-        Rectangle2D r2 = new Rectangle2D.Double( xInicio, yInicio, ancho, altura );
-        g2.fill(r2);
-    }   
-    public class MyFileFilter extends javax.swing.filechooser.FileFilter {
-        private String extension;
-        private String description;
-
-        public MyFileFilter(String extension, String description) {
-            this.extension = extension;
-            this.description = description;
-        }
-
-        @Override
-        public boolean accept(File f) {
-            return f.getName().toLowerCase().endsWith("."+extension) || f.isDirectory();
-        }
-
-        @Override
-        public String getDescription() {
-            return this.description;
-        }
-
-        public String getExtension() {
-            return extension;
-        }   
-        
-        public JFileChooser createFileChooser() {
+    /**
+     * @param createFileChooser metodo que crea el seleccionador de archivos
+     * @return retorna un archivo de la extensión seleccionada
+     */
+    public JFileChooser createFileChooser() {
         JFileChooser jfc = new JFileChooser();
         
         jfc.setAcceptAllFileFilterUsed(true);
@@ -363,8 +392,65 @@ public class MiPanel extends JPanel {
         }
         return jfc;
     }
-        
-      public void guardar() {
+    public void resetAtributes(){
+        this.rectangulo = true;
+        this.linea = false;
+        this.borrar = false;
+        this.relleno = false;
+        setColorActual(Color.MAGENTA);
+        this.setBackground(Color.WHITE);
+        this.setBorder(new LineBorder(Color.BLUE, 2));        
+    }
+    
+    public void resetAll() {
+        resetAtributes();
+        setMiImagen(null);
+        repaint();
+    }
+    
+    /**
+     * @param abrir metodo que se encarga de verificar que la apartura de archivos se lleve a cabo y sea correcta
+     * @return retorna un booleano
+     */
+    public boolean abrir() {
+        try {
+            JFileChooser jfc = createFileChooser();
+            jfc.showDialog(this, "Seleccionar archivo ...");
+            
+            File file = jfc.getSelectedFile();
+            if (file == null) {
+                return false;
+            }
+            setMiImagen( javax.imageio.ImageIO.read(file) );
+            int w = getMiImagen().getWidth(null);
+            int h = getMiImagen().getHeight(null);
+            
+            if (getMiImagen().getType() != BufferedImage.TYPE_INT_RGB) {
+                BufferedImage bi2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+                Graphics big = bi2.getGraphics();
+                big.drawImage(getMiImagen(), 0, 0, null);
+            }
+            setG2d( (Graphics2D) getMiImagen().getGraphics() );
+            repaint();
+            return true;
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            return false;
+            //System.exit(1);
+        }
+    }
+    
+    public String[] getFormats() {
+        String[] formatos = javax.imageio.ImageIO.getWriterFormatNames();
+        java.util.TreeSet<String> setFormatos = new java.util.TreeSet<String>();
+        for (String setFormato : setFormatos) {
+            setFormatos.add(setFormato.toLowerCase());
+        }
+        return setFormatos.toArray(new String[0]);
+    }
+    
+    public void guardar() {
         try {
             JFileChooser jfc = createFileChooser();
             jfc.showDialog(this, "Seleccionar archivo ...");
@@ -387,7 +473,11 @@ public class MiPanel extends JPanel {
             System.out.println(e.getMessage());
         }
     }
-   
+    /**
+     * 
+     * @param guardarAutomatico recibe el nombre del archivo asociado a la imagen dibujada en la pizarra lo guarda en una extensión jpg y lo almacena en la carpeta exterior a src 
+     * @return no retorna nada
+     */
     public void guardarAutomatico(String nombreArchivo) {
         try {
             String extension = "jpg";
@@ -414,13 +504,5 @@ public class MiPanel extends JPanel {
         catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
-     public String[] getFormats() {
-        String[] formatos = javax.imageio.ImageIO.getWriterFormatNames();
-        java.util.TreeSet<String> setFormatos = new java.util.TreeSet<String>();
-        for (String setFormato : setFormatos) {
-            setFormatos.add(setFormato.toLowerCase());
-        }
-        return setFormatos.toArray(new String[0]);
     }
 }
