@@ -38,7 +38,7 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
     JColorChooser elegirColor = new JColorChooser();
     
     ButtonGroup btnGrp;
-    Panel Panel;
+    MiPanel Panel;
    
     
     String nombreArchivo;
@@ -76,7 +76,7 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
     public Paint(String arch) throws HeadlessException {
         crearMenu();
         addListener();
-        Panel = new Panel();
+        Panel = new MiPanel();
         //Panel1 = new Panel1();
         this.add(Panel);
         this.setSize(1024,800);

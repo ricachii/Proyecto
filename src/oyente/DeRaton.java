@@ -5,53 +5,82 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import pizarra.Panel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import pizarra.MiPanel;
 
-class OyenteDeRaton extends MouseAdapter {
-    Panel MiPanel;
 
-    public OyenteDeRaton(Panel p) {
-        MiPanel = p;
+public class DeRaton extends MouseAdapter {
+    private MiPanel miPanel;
 
+    public MiPanel getMiPanel() {
+        return miPanel;
     }
 
+    public void setMiPanel(MiPanel miPanel) {
+        this.miPanel = miPanel;
+    }
+
+    public DeRaton(MiPanel miPanel) {
+        this.miPanel = miPanel;
+    }
+    
     @Override
     public void mousePressed(MouseEvent evento) {
-        MiPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        MiPanel.setp1(evento.getPoint());
+        getMiPanel().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        getMiPanel().setPuntoX(evento.getPoint());
 
-        if (MiPanel.getBorrar()) {
-            MiPanel.setColorAnterior(MiPanel.getColorActual());
-            MiPanel.rellenoAnterior = MiPanel.relleno;
-            MiPanel.setColorActual(Color.LIGHT_GRAY);
-        }
+        if (getMiPanel().isBorrar() || getMiPanel().isSeleccionar()) {
+            getMiPanel().setColorAnterior(getMiPanel().getColorActual());
+            getMiPanel().setRellenoAnterior(getMiPanel().isRelleno()); 
+            getMiPanel().setColorActual(Color.LIGHT_GRAY);
+        }     
     }
 
     @Override
     public void mouseReleased(MouseEvent evento) {
-        MiPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        if (MiPanel.getRectangulo()) {
-            MiPanel.setp2(evento.getPoint());
-            if (MiPanel.getp2() != null) {
-                MiPanel.setFigura(MiPanel.crearRectangulo(MiPanel.getp1(), MiPanel.getp2()));
-                MiPanel.repaint();
+        getMiPanel().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        if (getMiPanel().isRectangulo()) {
+            getMiPanel().setPuntoY(evento.getPoint());
+            if (getMiPanel().getPuntoY() != null) {
+                getMiPanel().setFigura(getMiPanel().crearRectangulo(getMiPanel().getPuntoX(), getMiPanel().getPuntoY()));
+                getMiPanel().repaint();
             }
-        } else {
-            if (MiPanel.getLinea()) {
-                MiPanel.setp2(evento.getPoint());
-                MiPanel.setFigura(MiPanel.crearLinea(MiPanel.getp1(), MiPanel.getp2()));
-                MiPanel.repaint();
-            } else {
-                if (MiPanel.getBorrar()) {
-                    MiPanel.setp2(evento.getPoint());
+        }
+        else {
+            if (getMiPanel().isLinea()) {
+                getMiPanel().setPuntoY(evento.getPoint());
+                getMiPanel().setFigura(getMiPanel().crearLinea(getMiPanel().getPuntoX(), getMiPanel().getPuntoY()));
+                getMiPanel().repaint();
+            }
+            else {
+                if (getMiPanel().isBorrar()) {
+                    getMiPanel().setPuntoY(evento.getPoint());
 
-                    MiPanel.setColorActual(Color.WHITE);
-                    MiPanel.relleno = true;
+                    getMiPanel().setColorActual(Color.WHITE);
+                    getMiPanel().setRelleno(true);
+                    getMiPanel().setFigura(getMiPanel().borrarAlgo(getMiPanel().getPuntoX(), getMiPanel().getPuntoY()));
+                    getMiPanel().repaint();
+                }
+                else {
+                    if (getMiPanel().isAgregarTexto()) {
+                        getMiPanel().setPuntoY(evento.getPoint());
 
-                    MiPanel.setFigura(MiPanel.borrarAlgo(MiPanel.getp1(), MiPanel.getp2()));
-                    MiPanel.repaint();
+                        getMiPanel().setFigura(getMiPanel().agregarTexto(getMiPanel().getPuntoX(), getMiPanel().getPuntoY()));
+                        getMiPanel().repaint();                    
+                    }
+                    else {
+                        if (getMiPanel().isSeleccionar()) {
+                            getMiPanel().setPuntoY(evento.getPoint());
+                            System.out.println("2. Este es mi área");
+                            getMiPanel().setFigura(getMiPanel().seleccionarAlgo(getMiPanel().getPuntoX(), getMiPanel().getPuntoY()));
+                            getMiPanel().setColorActual(Color.WHITE);
+                            getMiPanel().setRelleno(true);                            
+                            getMiPanel().repaint();                    
+                        }
+                    }
                 }
             }
         }
-    }
+    }    
 }
