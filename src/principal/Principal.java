@@ -1,9 +1,13 @@
 
-package proyecto;
+package principal;
+
+
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import pizarra.*;
+
 
 /**
  *

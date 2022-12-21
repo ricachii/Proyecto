@@ -1,27 +1,24 @@
-package proyecto;
 
+package pizarra;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import oyente.*;
+
+
 
 class Panel extends JPanel{
     private Point p1;
@@ -48,8 +45,8 @@ class Panel extends JPanel{
         this.colorActual = Color.MAGENTA;
         this.setBackground(Color.WHITE);
         this.setBorder(new LineBorder(Color.BLUE, 2));
-        OyenteDeRaton miOyenteDeRaton = new OyenteDeRaton(this);
-        OyenteDeMovimiento miOyenteDeMovimiento = new OyenteDeMovimiento(this);
+        DeRaton miOyenteDeRaton = new DeRaton(this);
+        DeMovimiento miOyenteDeMovimiento = new DeMovimiento(this);
         addMouseListener(miOyenteDeRaton);
         addMouseMotionListener(miOyenteDeMovimiento);
         
@@ -359,6 +356,3 @@ class Panel extends JPanel{
   
 }
     
- 
-    
-

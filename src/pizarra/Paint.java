@@ -1,4 +1,6 @@
-package proyecto;
+
+package pizarra;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,10 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 
-/**
- *
- * @author Nicolas
- */
+
 public class Paint extends JFrame implements ActionListener, WindowFocusListener {
     /* Atributos */
     JMenu archivo;
@@ -257,4 +256,3 @@ public class Paint extends JFrame implements ActionListener, WindowFocusListener
         }
     }
 }
-

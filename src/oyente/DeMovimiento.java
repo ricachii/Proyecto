@@ -1,8 +1,11 @@
-package proyecto;
+
+package oyente;
+
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import pizarra.Panel;
 
 class OyenteDeMovimiento extends MouseMotionAdapter {
 
@@ -48,4 +51,3 @@ class OyenteDeMovimiento extends MouseMotionAdapter {
         }
     }
 }
-
