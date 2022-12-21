@@ -377,6 +377,17 @@ public class MiPanel extends JPanel {
         Shape nuevaFigura = new Rectangle2D.Double(xInicio, yInicio, ancho, altura);
         return nuevaFigura;
     }
+    public Shape agregarTexto(Point p1, Point p2) {
+        double ancho   = Math.abs(0 - p2.getX());
+        double altura  = Math.abs(0 - p2.getY());
+
+        FontRenderContext frc = getG2d().getFontRenderContext();
+        TextLayout tl = new TextLayout(this.getTexto(), fuente, frc);
+        AffineTransform af = new AffineTransform();
+        af.setToTranslation(ancho, altura);
+        Shape shape = tl.getOutline(af);
+        return shape; 
+    } 
     /**
      * @param createFileChooser metodo que crea el seleccionador de archivos
      * @return retorna un archivo de la extensión seleccionada
